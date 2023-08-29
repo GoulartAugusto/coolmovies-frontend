@@ -2,11 +2,8 @@ import { css } from '@emotion/react';
 import {
     Button,
     Paper,
-    TextField,
-    Tooltip,
     Typography,
-    Zoom,
-  } from '@mui/material';
+} from '@mui/material';
 
 import { gql, useQuery } from "@apollo/client";
 
@@ -47,25 +44,20 @@ export function MovieCard() {
                     {/* map over the movies and render them */}
                     {!data ? null : data.allMovies.nodes.map((movie: any) => {
                         return (
-                        <div css={styles.movieCard}>
+                        <div>
                             <div key={movie.id}>
                                 <Image src={movie.imgUrl} height={350} width={250} alt={movie.title} css={styles.movieCard} />
                                 
-                                {/* <Typography variant="h6" css={styles.heading}>
-                                    {movie.title}
-                                </Typography>
-                                
-                                <Typography css={styles.subtitle}>
-                                    Film released in :
-                                    <br />
-                                    {movie.releaseDate}
-                                </Typography>
-                                <Typography css={styles.subtitle}>
-                                    A film by:
-                                    <br />
-                                    {movie.movieDirectorByMovieDirectorId.name}
-                                </Typography> */}
-
+                                <Button css={styles.floattingBtn} size="large" variant="text" color='secondary'>+ Details</Button>
+                                <div css={styles.blurEffect}></div>
+                                    <div css={styles.description}>
+                                        <Typography css={styles.subtitle}>
+                                            {movie.title}
+                                        </Typography>
+                                        <Typography css={styles.subtitle}>
+                                            {movie.movieDirectorByMovieDirectorId.name} | {movie.releaseDate.substring(0, 4)}
+                                        </Typography>
+                                    </div>
                             </div>
                         </div>
                         )
@@ -98,7 +90,7 @@ const styles = {
       fontWeight: 100,
       paddingLeft: '0.5em',
       textAlign: 'justify',
-      fontSize:'1.1em',
+      fontSize:'1em',
       maxWidth: 250,
       color: '#ffffff',
     }),
@@ -124,6 +116,7 @@ const styles = {
         textAlign:'center',
         borderRadius:'5%',
         border:'2px solid #8700FC',
+        position:'absolute',
         h6: {
             fontWeight: '400',
             fontSize: '1.2em',
@@ -132,6 +125,25 @@ const styles = {
             paddingLeft:'0.5em',
             marginRight: '0.5em'
         }
-    })
+    }),
+    floattingBtn: css({
+        position:'relative',
+        top:'3px',
+        right:'70px'
+    }),
+    description: css({
+        position:'relative',
+        top:'150px',
+        left:'5px',
+
+    }),
+    blurEffect: css({
+        position:'relative',
+        filter: `blur(20px)`,
+        background:'black',
+        height:'80px',
+        top:'245px',
+        right:'10x',
+    }),
   };
   
