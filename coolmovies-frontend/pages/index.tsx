@@ -24,14 +24,14 @@ const Home: NextPage = () => {
 
       <div css={styles.body}>
         <Typography variant={'h1'} css={styles.heading}>
-          {'EcoPortal Coolmovies Test'}
+          {'EcoPortal Coolmovies'}
         </Typography>
-        <Typography variant={'subtitle1'} css={styles.subtitle}>
+        {/* <Typography variant={'subtitle1'} css={styles.subtitle}>
           {`Thank you for taking the time to take our test. We really appreciate it. 
         All the information on what is required can be found in the README at the root of this repo. 
         Please don't spend ages on this and just get through as much of it as you can. 
         Good luck! 😄`}
-        </Typography>
+        </Typography> */}
 
         <div css={styles.mainControls}>
           <Tooltip
@@ -41,11 +41,13 @@ const Home: NextPage = () => {
             <Button
               variant={'contained'}
               onClick={() => dispatch(exampleActions.increment())}
+              color='secondary'
             >
               {`Redux Increment: ${exampleState.value}`}
             </Button>
           </Tooltip>
           <Button
+            color='secondary'
             variant={'outlined'}
             onClick={() =>
               dispatch(
@@ -82,6 +84,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    background:'#000000'
   }),
   navBar: css({
     background: primary,
@@ -91,8 +94,11 @@ const styles = {
     alignItems: 'center',
     padding: 16,
     borderRadius: 0,
+    backgroundColor:'#000000',
+    
     p: {
-      color: 'white',
+      color: '#8700FC',
+      fontSize:'1.5em'
     },
   }),
   body: css({
@@ -102,13 +108,13 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
   }),
-  heading: css({ marginTop: 16, fontSize: '2.75rem', textAlign: 'center' }),
+  heading: css({ marginTop: 16, fontSize: '2.75rem', textAlign: 'center', color:'#8700FC' }),
   subtitle: css({
     fontWeight: 300,
     textAlign: 'center',
     maxWidth: 600,
     margin: '24px 0',
-    color: 'rgba(0, 0, 0, 0.6)',
+    color: 'rgba(250 0, 0)',
   }),
   mainControls: css({
     display: 'flex',
