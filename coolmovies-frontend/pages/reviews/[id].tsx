@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import {
   Typography,
-  SvgIcon
+  IconButton,
 } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/client";
 
 import { GET_MOVIE } from '../../queries/MoviesQueries';
+import EditIcon from '../../components/EditIcon'
 
 // The component
 export default function MovieDetail() {
@@ -65,6 +66,10 @@ export default function MovieDetail() {
                   comments.map((comment: any) => {
                     return (
                       <div css={styles.commentCard}>
+                        
+                        <IconButton size="large">
+                          <EditIcon />
+                        </IconButton>
                         <Typography>
                           Commented by: {comment?.userByUserReviewerId && comment.userByUserReviewerId.name || 'Anonymous' }
                         </Typography>
