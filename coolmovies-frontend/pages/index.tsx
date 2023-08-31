@@ -79,7 +79,6 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    background:'#000000'
   }),
   body: css({
     alignSelf: 'stretch',

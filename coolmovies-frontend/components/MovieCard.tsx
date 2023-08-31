@@ -36,7 +36,7 @@ export function MovieCard() {
                         return (
                         <div>
                             <div key={movie.id}>
-                                <Link href={`/movies/${movie.id}`} key={movie.id}>
+                                <Link href={`/reviews/${movie.id}`} key={movie.id}>
                                     <Image src={movie.imgUrl} height={350} width={250} alt={movie.title} css={styles.movieCard} />
                                     <Button css={styles.floattingBtn} size="large" variant="text" color='secondary'>+ Details</Button>
                                     <div css={styles.blurEffect}></div>

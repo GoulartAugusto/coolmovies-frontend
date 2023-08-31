@@ -53,8 +53,8 @@ export default App;
 
 const styles = {
   root: css({
-    backgroundColor:'#000000',
-    color:"white",
+    backgroundColor:'#ffffff',
+    color:"black",
     height:'100vh',
   })
 }
