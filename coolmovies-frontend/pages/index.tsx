@@ -1,7 +1,6 @@
 import { css } from '@emotion/react';
 import {
   Button,
-  Paper,
   TextField,
   Tooltip,
   Typography,
@@ -18,10 +17,6 @@ const Home: NextPage = () => {
   const exampleState = useAppSelector((state) => state.example);
   return (
     <div css={styles.root}>
-      <Paper elevation={3} css={styles.navBar}>
-        <Typography>{'EcoPortal'}</Typography>
-      </Paper>
-
       <div css={styles.body}>
         <Typography variant={'h1'} css={styles.heading}>
           {'EcoPortal Coolmovies'}
@@ -79,27 +74,12 @@ const Home: NextPage = () => {
 
 const styles = {
   root: css({
-    height: '100vh',
+    height: 'full',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     background:'#000000'
-  }),
-  navBar: css({
-    background: primary,
-    height: 50,
-    alignSelf: 'stretch',
-    display: 'flex',
-    alignItems: 'center',
-    padding: 16,
-    borderRadius: 0,
-    backgroundColor:'#000000',
-    
-    p: {
-      color: '#8700FC',
-      fontSize:'1.5em'
-    },
   }),
   body: css({
     alignSelf: 'stretch',

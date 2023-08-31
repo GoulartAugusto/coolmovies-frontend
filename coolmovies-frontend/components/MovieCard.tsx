@@ -1,35 +1,25 @@
 import { css } from '@emotion/react';
 import {
     Button,
-    Paper,
     Typography,
 } from '@mui/material';
 
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_MOVIES_DETAILS } from '../queries/MoviesQueries'
 
 import Image from 'next/image';
 import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-const GET_ALL_MOVIES = gql(`
-    query AllMovies {
-        allMovies {
-            nodes {
-                id
-                title
-                imgUrl
-                releaseDate
-                movieDirectorByMovieDirectorId {
-                    name
-                    nodeId
-                }
-            }
-        }
-    }
-`);
+
+
 
 export function MovieCard() {
     // our query's result, data, is typed!
-    const { loading, data } = useQuery(GET_ALL_MOVIES)
+    const { loading, data } = useQuery(GET_ALL_MOVIES_DETAILS)
+    console.log(data)
+    const router = useRouter()
 
     return (
         <div css={styles.root}>
@@ -46,10 +36,10 @@ export function MovieCard() {
                         return (
                         <div>
                             <div key={movie.id}>
-                                <Image src={movie.imgUrl} height={350} width={250} alt={movie.title} css={styles.movieCard} />
-                                
-                                <Button css={styles.floattingBtn} size="large" variant="text" color='secondary'>+ Details</Button>
-                                <div css={styles.blurEffect}></div>
+                                <Link href={`/movies/${movie.id}`} key={movie.id}>
+                                    <Image src={movie.imgUrl} height={350} width={250} alt={movie.title} css={styles.movieCard} />
+                                    <Button css={styles.floattingBtn} size="large" variant="text" color='secondary'>+ Details</Button>
+                                    <div css={styles.blurEffect}></div>
                                     <div css={styles.description}>
                                         <Typography css={styles.subtitle}>
                                             {movie.title}
@@ -58,6 +48,7 @@ export function MovieCard() {
                                             {movie.movieDirectorByMovieDirectorId.name} | {movie.releaseDate.substring(0, 4)}
                                         </Typography>
                                     </div>
+                                </Link>
                             </div>
                         </div>
                         )
@@ -104,11 +95,11 @@ const styles = {
         gridTemplateColumns: '250px 250px',
         gap:'1em',
         textAlign:'center',
-        alignContent:'center',
-        alignItems:'center',
-        justifyContent:'center',
-        justifySelf:'center',
-        
+        "@media (max-width: 600px)": {
+            display: "flex",
+            flexDirection:'column',
+            gap:"13rem"
+          },
     }),
     movieCard: css({
         display: 'flex',
@@ -117,6 +108,7 @@ const styles = {
         borderRadius:'5%',
         border:'2px solid #8700FC',
         position:'absolute',
+
         h6: {
             fontWeight: '400',
             fontSize: '1.2em',
@@ -146,4 +138,3 @@ const styles = {
         right:'10x',
     }),
   };
-  
