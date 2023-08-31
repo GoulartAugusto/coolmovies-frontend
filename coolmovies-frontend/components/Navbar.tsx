@@ -24,6 +24,7 @@ const Navbar = (props: Props) => {
 const styles = {
     navBar: css({
         height: 50,
+        width:'100%',
         alignSelf: 'stretch',
         display: 'flex',
         alignItems: 'center',

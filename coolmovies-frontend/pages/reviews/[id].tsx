@@ -2,6 +2,11 @@ import { css } from '@emotion/react';
 import {
   Typography,
   IconButton,
+  FormControl,
+  TextField,
+  Input,
+  Rating,
+  Button
 } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
@@ -46,7 +51,7 @@ export default function MovieDetail() {
           <div css={styles.infoWrapper}>
                   <div>
                   <Image src={movie.imgUrl} height={350} width={250} alt={movie.title} key={movie.id} />
-                      <Typography css={styles.heading}>
+                      <Typography variant='h3' css={styles.heading}>
                           {movie.title}
                       </Typography>
                       <Typography>
@@ -54,7 +59,7 @@ export default function MovieDetail() {
                       </Typography>
                       <br />
                       <Typography variant='h6'>
-                        Comments about the movie (total comments: {movie.movieReviewsByMovieId.totalCount})
+                        Reviews about the movie (total reviews: {movie.movieReviewsByMovieId.totalCount})
                       </Typography>
                       <br />
                   </div>
@@ -66,15 +71,17 @@ export default function MovieDetail() {
                   comments.map((comment: any) => {
                     return (
                       <div css={styles.commentCard}>
-                        
-                        <IconButton size="large">
-                          <EditIcon />
-                        </IconButton>
-                        <Typography>
-                          Commented by: {comment?.userByUserReviewerId && comment.userByUserReviewerId.name || 'Anonymous' }
+                        <Typography variant='body1'>
+                          Review by: {comment?.userByUserReviewerId && comment.userByUserReviewerId.name || 'Anonymous' }
                         </Typography>
-                        <Typography variant='h5'>{comment.title}</Typography>
-                        <Typography variant='h6'>with a score of {comment.rating} out of 5</Typography>
+                        <Typography variant='h5'>
+                          {comment.title}
+                          <IconButton size="large">
+                            <EditIcon />
+                           </IconButton>
+                        </Typography>
+                        <Rating name="read-only" value={comment.rating} readOnly />
+                        <br />
                         <Typography variant='body1'>{comment.body}</Typography><br/>
                       </div>
                     )
@@ -85,8 +92,27 @@ export default function MovieDetail() {
             </div>
         </div>
         )}
-        <div>
-
+        <div css={styles.reviewForm}>
+            <form action="submit">
+              <FormControl sx={{ width: '93vw' }}>
+                <TextField fullWidth id="outlined-basic" label="Name" variant="outlined" color='success' required />
+                <br />
+                <TextField fullWidth id="outlined-basic" label="Title" variant="outlined" color='success' required />
+                <br />
+                <Rating name="read-only" />
+                <br/>
+                <TextField 
+                  multiline fullWidth id="outlined-multiline-flexible" 
+                  label="Write your review ..." 
+                  variant="outlined" 
+                  color='success' 
+                  sx={{ minWidth: '150px' }}
+                  required
+                />
+                {/* <FormControl component="fieldset"> */}
+                <Button color='success' variant='contained'>Submit</Button>
+              </FormControl>
+            </form>
         </div>
     </div>
   </div>
@@ -107,9 +133,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
   }),
-  heading: css({ marginBottom: 16, marginTop: 12, fontSize: '2.75rem', textAlign: 'justify', color:'grey' }),
+  heading: css({ marginBottom: 16, marginTop: 12, fontSize: '2.75rem', color:'grey' }),
   infoWrapper: css({
-      display:"flex",
+      display:"block",
       gap:'1em',
       textAlign:'center',
       "@media (max-width: 600px)": {
@@ -124,5 +150,16 @@ const styles = {
     border:'1px solid black',
     marginBottom:'1rem',
     padding:'1rem',
+  }),
+  reviewForm: css({
+    display:"block",
+    gap:'1em',
+    textAlign:'center',
+    "@media (max-width: 600px)": {
+        display: "flex",
+        flexDirection:'column',
+        gap:"13rem"
+      },
+    
   })
 };
