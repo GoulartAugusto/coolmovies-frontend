@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 
 import { useQuery } from "@apollo/client";
-import { GET_ALL_MOVIES_DETAILS } from '../queries/MoviesQueries'
+import { GET_MOVIE } from '../queries/MoviesQueries'
 
 import Image from 'next/image';
 import React from 'react';
@@ -17,7 +17,7 @@ import { useRouter } from 'next/router';
 
 export function MovieCard() {
     // our query's result, data, is typed!
-    const { loading, data } = useQuery(GET_ALL_MOVIES_DETAILS)
+    const { loading, data } = useQuery(GET_MOVIE)
     console.log(data)
     const router = useRouter()
 

@@ -4,18 +4,21 @@ import {
   IconButton,
   FormControl,
   TextField,
-  Input,
   Rating,
   Button
 } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
+import { gql, useMutation  } from '@apollo/client';
 
 import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/client";
 
 import { GET_MOVIE } from '../../queries/MoviesQueries';
 import EditIcon from '../../components/EditIcon'
+
+import { NewReviewForm } from '../../components/NewReviewForm';
+
 
 // The component
 export default function MovieDetail() {
@@ -35,7 +38,6 @@ export default function MovieDetail() {
   }
 
   const comments = movie.movieReviewsByMovieId.nodes
-
 
   {/* add remotePatterns on next.config to render images from url */}
   return (
@@ -93,26 +95,7 @@ export default function MovieDetail() {
         </div>
         )}
         <div css={styles.reviewForm}>
-            <form action="submit">
-              <FormControl sx={{ width: '93vw' }}>
-                <TextField fullWidth id="outlined-basic" label="Name" variant="outlined" color='success' required />
-                <br />
-                <TextField fullWidth id="outlined-basic" label="Title" variant="outlined" color='success' required />
-                <br />
-                <Rating name="read-only" />
-                <br/>
-                <TextField 
-                  multiline fullWidth id="outlined-multiline-flexible" 
-                  label="Write your review ..." 
-                  variant="outlined" 
-                  color='success' 
-                  sx={{ minWidth: '150px' }}
-                  required
-                />
-                {/* <FormControl component="fieldset"> */}
-                <Button color='success' variant='contained'>Submit</Button>
-              </FormControl>
-            </form>
+          <NewReviewForm />
         </div>
     </div>
   </div>
@@ -150,16 +133,28 @@ const styles = {
     border:'1px solid black',
     marginBottom:'1rem',
     padding:'1rem',
+    borderRadius:'10px'
   }),
   reviewForm: css({
     display:"block",
     gap:'1em',
-    textAlign:'center',
-    "@media (max-width: 600px)": {
-        display: "flex",
-        flexDirection:'column',
-        gap:"13rem"
-      },
+    border:'1px solid black',
+    padding:'1rem',
+    borderRadius:'10px',
+
     
   })
 };
+
+{/*
+
+=== useMutation is a operation that creates, modify or destroy data in GraphQL ===
+
+mutation AddTodo($type: String!) {
+  addTodo(type: $type) {
+    id
+    type
+  }
+}
+
+*/}
