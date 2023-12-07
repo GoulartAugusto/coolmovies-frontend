@@ -30,14 +30,17 @@ export default function MovieDetail() {
 
   console.log(data)
 
-  // this is only render the movie that matches with router.query.id
-  for (let i = 0; i < data.allMovies.nodes.length; i++) {
-    if (data.allMovies.nodes[i].id == router.query.id) {
-      var movie = data.allMovies.nodes[i]
+  // this only render the movie that matches with router.query.id
+  for (let i = 0; i < data?.allMovies.nodes.length; i++) {
+    if (data.allMovies.nodes[i].id == id) {
+      var movie = data?.allMovies.nodes[i]
     }
   }
 
-  const comments = movie.movieReviewsByMovieId.nodes
+  const reviews = movie?.movieReviewsByMovieId.nodes
+
+  // the line bellow is the path to the first comment
+  //console.log(movie?.movieReviewsByMovieId.nodes[0].id)
 
   {/* add remotePatterns on next.config to render images from url */}
   return (
@@ -70,7 +73,7 @@ export default function MovieDetail() {
               <div>
                 {
                   !data ? null :
-                  comments.map((comment: any) => {
+                  reviews.map((comment: any) => {
                     return (
                       <div css={styles.commentCard}>
                         <Typography variant='body1'>
@@ -150,11 +153,11 @@ const styles = {
 
 === useMutation is a operation that creates, modify or destroy data in GraphQL ===
 
-mutation AddTodo($type: String!) {
-  addTodo(type: $type) {
-    id
-    type
-  }
-}
+I want to insert on graphQL server the data of the NewReviewForm
+
+how to do it?
+
 
 */}
+
+// how to insert data on graphQL apollo?

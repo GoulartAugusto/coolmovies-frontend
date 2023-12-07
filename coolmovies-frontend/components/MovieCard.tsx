@@ -5,19 +5,52 @@ import {
 } from '@mui/material';
 
 import { useQuery } from "@apollo/client";
-import { GET_MOVIE } from '../queries/MoviesQueries'
+// import { GET_MOVIE } from '../queries/MoviesQueries'
 
 import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { gql } from '@apollo/client';
 
-
+const GET_MOVIES = gql(`
+    query getMovies {
+        allMovies {
+        nodes {
+            id
+            title
+            imgUrl
+            releaseDate
+            movieDirectorByMovieDirectorId {
+            name
+            nodeId
+            id
+            age
+            }
+            movieReviewsByMovieId {
+            totalCount
+            nodes {
+                body
+                id
+                movieId
+                nodeId
+                rating
+                title
+                userByUserReviewerId {
+                name
+                id
+                }
+            }
+            }
+        }
+        }
+    }
+`)
 
 
 export function MovieCard() {
     // our query's result, data, is typed!
-    const { loading, data } = useQuery(GET_MOVIE)
+    const { loading, error, data } = useQuery(GET_MOVIES)
     console.log(data)
     const router = useRouter()
 
