@@ -8,13 +8,12 @@ import {
   Button
 } from '@mui/material';
 import Image from 'next/image';
-import React, { useState } from 'react';
-import { gql, useMutation  } from '@apollo/client';
+import React from 'react';
+import { gql } from '@apollo/client';
 
 import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/client";
 
-//import { GET_MOVIE } from '../../queries/MoviesQueries';
 import EditIcon from '../../components/EditIcon'
 
 import { NewReviewForm } from '../../components/NewReviewForm';
@@ -50,40 +49,13 @@ query GetMovie($id: ID!) {
 
 // The component
 export default function MovieDetail() {
-  
-  // fetch data using apollo client
-  //const { data, loading, error } = useQuery(GET_MOVIE);
-  
   const router = useRouter();
   const { id } = router.query;
-
+  
+  // fetch data using apollo client
 const { loading, error, data } = useQuery(GET_MOVIE, {
 variables: { id: id },
 })
-
-
-  {/*
-
-  const { data, loading, error } = useQuery(GET_MOVIE_BY_NODEID, {
-
-  })
-*/}
-
-  //console.log(data)
-
-  // console.log(data?.allMovies.nodes[0].nodeId)
-
-  // this only render the movie that matches with router.query.id
-  // for (let i = 0; i < data?.allMovies.nodes.length; i++) {
-  //   if (data.allMovies.nodes[i].id == id) {
-  //     var movie = data?.allMovies.nodes[i]
-  //   }
-  // }
-
-  // const reviews = movie?.movieReviewsByMovieId.nodes
-
-  // the line bellow is the path to the first comment
-  //console.log(movie?.movieReviewsByMovieId.nodes[0].id)
 
   if (loading) return (
     <Typography variant={'h1'} css={styles.heading}>
@@ -123,7 +95,7 @@ variables: { id: id },
                   !data ? null :
                   reviews.map((comment: any) => {
                     return (
-                      <div css={styles.commentCard}>
+                      <div css={styles.commentCard} key={comment.id}>
                         <Typography variant='body1'>
                           Review by: {comment?.userByUserReviewerId && comment.userByUserReviewerId.name || 'Anonymous' }
                         </Typography>
@@ -194,16 +166,3 @@ const styles = {
     
   })
 };
-
-{/*
-
-=== useMutation is a operation that creates, modify or destroy data in GraphQL ===
-
-I want to insert on graphQL server the data of the NewReviewForm
-
-how to do it?
-
-
-*/}
-
-// how to insert data on graphQL apollo?

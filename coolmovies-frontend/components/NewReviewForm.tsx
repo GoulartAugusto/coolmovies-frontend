@@ -11,25 +11,6 @@ import {
 import { useRouter } from 'next/router';
 
 
-// const CREATE_REVIEW = gql(`
-// mutation CreateReview($title: String!, $body: String!, $rating: Number!, $name: String!) {
-//   allMovieReviews(title: $title, body: $body, rating: $rating, name: $name) {
-//     nodes {
-//       id
-//       title
-//       rating
-//       body
-//       movieId
-//       userByUserReviewerId {
-//         id
-//         name
-//       }
-//     }
-//   }
-// }
-
-// `)
-
 // Define the GraphQL mutation
 const CREATE_MOVIE_REVIEW = gql(`
 mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
@@ -45,8 +26,19 @@ mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
         title
       }
       userByUserReviewerId {
+        id
         name
       }
+    }
+  }
+}
+`)
+
+const CREATE_USER = gql(`
+mutation NewUser($input: CreateUserInput!) {
+  createUser(input: $input) {
+    user {
+      name
     }
   }
 }
@@ -65,25 +57,55 @@ export const NewReviewForm = (props: any) => {
     body: '',
     rating: value,
     movieId: props.message, // Replace with actual movie ID
-    userReviewerId: '5f1e6707-7c3a-4acd-b11f-fd96096abd5a' // Replace with actual user ID
+    userReviewerId: '' // Will be set to the user ID later
   })
-  // Define the useMutation hook
+
+  // Define the useMutation hooks
   const [createMovieReview, { loading, error, data }] = useMutation(CREATE_MOVIE_REVIEW)
+  const [createUser] = useMutation(CREATE_USER)
+
   // Handle form input changes
   const handleInputChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+
   }
-console.log(id)
+
+  // Handle name input changes
+  const handleNameChange = (e: any) => {
+    setName(e.target.value)
+  }
+
   // Handle form submission
   const handleSubmit = async (e: any) => {
     // If the e.preventDefault() is uncommented when the button submit is clicked the review stay on the form
-    //e.preventDefault()
+    // e.preventDefault()
 
     // Call the createMovieReview mutation with form data
     try {
+      // Step 1: Create a new user with the entered name
+      const userResult = await createUser({
+        variables: {
+          input: {
+            user: {
+              name: name,
+            }
+          }
+        }
+      })
+      
+      // Step 2: Obtain the user ID  from result
+      const newUserId = userResult.data.createUser.user.id;
+
+      // Step 3: Update formData with the obtained user ID
+      setFormData({
+        ...formData,
+        userReviewerId: newUserId
+      })
+
+      // Step 4: Call the createMovieReview mutation with updated form data
       const result = await createMovieReview({
         variables: {
           input: {
@@ -99,7 +121,7 @@ console.log(id)
     }
   }
 
-  // Render the form
+  // Render the form ...
   return (
   <div>
     <div css={styles.reviewForm}>
@@ -117,7 +139,7 @@ console.log(id)
                 color='success' 
                 value={name}
                 name='name'
-                onChange={e => setName(e.target.value)}
+                onChange={handleNameChange}
               />
               <br />
               <TextField 
