@@ -5,6 +5,7 @@ export const GET_MOVIE = gql(`
         allMovies {
         nodes {
             id
+            nodeId
             title
             imgUrl
             releaseDate
@@ -33,3 +34,4 @@ export const GET_MOVIE = gql(`
         }
     }
 `)
+

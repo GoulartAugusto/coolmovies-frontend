@@ -14,44 +14,92 @@ import { gql, useMutation  } from '@apollo/client';
 import { useRouter } from 'next/router'
 import { useQuery } from "@apollo/client";
 
-import { GET_MOVIE } from '../../queries/MoviesQueries';
+//import { GET_MOVIE } from '../../queries/MoviesQueries';
 import EditIcon from '../../components/EditIcon'
 
 import { NewReviewForm } from '../../components/NewReviewForm';
 
+const GET_MOVIE = gql(`
+query GetMovie($id: ID!) {
+  movie(nodeId: $id) {
+    id
+    title
+    imgUrl
+    releaseDate
+    movieDirectorByMovieDirectorId {
+      id
+      name
+    }
+    movieReviewsByMovieId {
+      totalCount
+      nodes {
+        id
+        title
+        rating
+        body
+        movieId
+        userByUserReviewerId {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+`)
 
 // The component
 export default function MovieDetail() {
-  const router = useRouter();
-  const { id } = router.query;
   
   // fetch data using apollo client
-  const { data, loading } = useQuery(GET_MOVIE);
+  //const { data, loading, error } = useQuery(GET_MOVIE);
+  
+  const router = useRouter();
+  const { id } = router.query;
 
-  console.log(data)
+const { loading, error, data } = useQuery(GET_MOVIE, {
+variables: { id: id },
+})
+
+
+  {/*
+
+  const { data, loading, error } = useQuery(GET_MOVIE_BY_NODEID, {
+
+  })
+*/}
+
+  //console.log(data)
+
+  // console.log(data?.allMovies.nodes[0].nodeId)
 
   // this only render the movie that matches with router.query.id
-  for (let i = 0; i < data?.allMovies.nodes.length; i++) {
-    if (data.allMovies.nodes[i].id == id) {
-      var movie = data?.allMovies.nodes[i]
-    }
-  }
+  // for (let i = 0; i < data?.allMovies.nodes.length; i++) {
+  //   if (data.allMovies.nodes[i].id == id) {
+  //     var movie = data?.allMovies.nodes[i]
+  //   }
+  // }
 
-  const reviews = movie?.movieReviewsByMovieId.nodes
+  // const reviews = movie?.movieReviewsByMovieId.nodes
 
   // the line bellow is the path to the first comment
   //console.log(movie?.movieReviewsByMovieId.nodes[0].id)
 
+  if (loading) return (
+    <Typography variant={'h1'} css={styles.heading}>
+      {'...Loading'}
+    </Typography>
+  )
+  if (error) return <p>{error.message}</p>;
+
+  const { movie } = data
+
+  const reviews = movie?.movieReviewsByMovieId.nodes
   {/* add remotePatterns on next.config to render images from url */}
   return (
   <div css={styles.root}>
     <div css={styles.body}>
       {/* <p>Movie: {router.query.id}</p> */}
-        { loading ? (
-            <Typography variant={'h1'} css={styles.heading}>
-                {'...Loading'}
-            </Typography>
-        ) : (
         <div>
           <div css={styles.infoWrapper}>
                   <div>
@@ -93,12 +141,10 @@ export default function MovieDetail() {
                   })
                 }
               </div>
-
             </div>
         </div>
-        )}
         <div css={styles.reviewForm}>
-          <NewReviewForm />
+          <NewReviewForm message={movie.id} />
         </div>
     </div>
   </div>

@@ -18,6 +18,7 @@ const GET_MOVIES = gql(`
         allMovies {
         nodes {
             id
+            nodeId
             title
             imgUrl
             releaseDate
@@ -52,8 +53,9 @@ export function MovieCard() {
     // our query's result, data, is typed!
     const { loading, error, data } = useQuery(GET_MOVIES)
     console.log(data)
-    const router = useRouter()
 
+
+    // console.log(data.allMovies.nodes[1].nodeId)
     return (
         <div css={styles.root}>
             <div css={styles.body}>
@@ -68,8 +70,8 @@ export function MovieCard() {
                     {!data ? null : data.allMovies.nodes.map((movie: any) => {
                         return (
                         <div>
-                            <div key={movie.id}>
-                                <Link href={`/reviews/${movie.id}`} key={movie.id}>
+                            <div key={movie.nodeId}>
+                                <Link href={`/reviews/${movie.nodeId}`} key={movie.nodeId}>
                                     <Image src={movie.imgUrl} height={350} width={250} alt={movie.title} css={styles.movieCard} />
                                     <Button css={styles.floattingBtn} size="large" variant="text" color='secondary'>+ Details</Button>
                                     <div css={styles.blurEffect}></div>
@@ -80,6 +82,11 @@ export function MovieCard() {
                                         <Typography css={styles.subtitle}>
                                             {movie.movieDirectorByMovieDirectorId.name} | {movie.releaseDate.substring(0, 4)}
                                         </Typography>
+                                        
+                                        <Typography css={styles.subtitle}>
+                                            {movie.nodeId} | 
+                                        </Typography>
+                                        <Link href={`/REVIEWPAGE/${movie.nodeId}`} key={movie.nodeId}>CLIQUE AQUI</Link>
                                     </div>
                                 </Link>
                             </div>

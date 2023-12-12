@@ -11,24 +11,24 @@ import {
 import { useRouter } from 'next/router';
 
 
-const CREATE_REVIEW = gql(`
-mutation CreateReview($title: String!, $body: String!, $rating: Number!, $name: String!) {
-  allMovieReviews(title: $title, body: $body, rating: $rating, name: $name) {
-    nodes {
-      id
-      title
-      rating
-      body
-      movieId
-      userByUserReviewerId {
-        id
-        name
-      }
-    }
-  }
-}
+// const CREATE_REVIEW = gql(`
+// mutation CreateReview($title: String!, $body: String!, $rating: Number!, $name: String!) {
+//   allMovieReviews(title: $title, body: $body, rating: $rating, name: $name) {
+//     nodes {
+//       id
+//       title
+//       rating
+//       body
+//       movieId
+//       userByUserReviewerId {
+//         id
+//         name
+//       }
+//     }
+//   }
+// }
 
-`)
+// `)
 
 // Define the GraphQL mutation
 const CREATE_MOVIE_REVIEW = gql(`
@@ -41,6 +41,7 @@ mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
       body
       rating
       movieByMovieId {
+        nodeId
         title
       }
       userByUserReviewerId {
@@ -51,8 +52,7 @@ mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
 }
 `)
 
-export const NewReviewForm = () => {
-
+export const NewReviewForm = (props: any) => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -64,12 +64,11 @@ export const NewReviewForm = () => {
     title: '',
     body: '',
     rating: value,
-    movieId: id, // Replace with actual movie ID
+    movieId: props.message, // Replace with actual movie ID
     userReviewerId: '5f1e6707-7c3a-4acd-b11f-fd96096abd5a' // Replace with actual user ID
   })
   // Define the useMutation hook
   const [createMovieReview, { loading, error, data }] = useMutation(CREATE_MOVIE_REVIEW)
-
   // Handle form input changes
   const handleInputChange = (e: any) => {
     setFormData({
@@ -77,10 +76,11 @@ export const NewReviewForm = () => {
       [e.target.name]: e.target.value
     })
   }
-
+console.log(id)
   // Handle form submission
   const handleSubmit = async (e: any) => {
-    e.preventDefault()
+    // If the e.preventDefault() is uncommented when the button submit is clicked the review stay on the form
+    //e.preventDefault()
 
     // Call the createMovieReview mutation with form data
     try {
