@@ -1,37 +1,30 @@
 import { gql } from "@apollo/client";
 
 export const GET_MOVIE = gql(`
-    query {
-        allMovies {
-        nodes {
-            id
-            nodeId
-            title
-            imgUrl
-            releaseDate
-            movieDirectorByMovieDirectorId {
-            name
-            nodeId
-            id
-            age
-            }
-            movieReviewsByMovieId {
-            totalCount
-            nodes {
-                body
-                id
-                movieId
-                nodeId
-                rating
-                title
-                userByUserReviewerId {
-                name
-                id
-                }
-            }
-            }
-        }
-        }
+query GetMovie($id: ID!) {
+  movie(nodeId: $id) {
+    id
+    title
+    imgUrl
+    releaseDate
+    movieDirectorByMovieDirectorId {
+      id
+      name
     }
+    movieReviewsByMovieId {
+      totalCount
+      nodes {
+        id
+        title
+        rating
+        body
+        movieId
+        userByUserReviewerId {
+          id
+          name
+        }
+      }
+    }
+  }
+}
 `)
-

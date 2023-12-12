@@ -9,6 +9,7 @@ import {
   Button
 } from '@mui/material';
 import { useRouter } from 'next/router';
+import { GET_MOVIE } from '../queries/MoviesQueries';
 
 
 // Define the GraphQL mutation
@@ -22,11 +23,9 @@ mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
       body
       rating
       movieByMovieId {
-        nodeId
         title
       }
       userByUserReviewerId {
-        id
         name
       }
     }
@@ -38,6 +37,7 @@ const CREATE_USER = gql(`
 mutation NewUser($input: CreateUserInput!) {
   createUser(input: $input) {
     user {
+      id
       name
     }
   }
@@ -46,11 +46,9 @@ mutation NewUser($input: CreateUserInput!) {
 
 export const NewReviewForm = (props: any) => {
   const router = useRouter();
-  const { id } = router.query;
 
-  const [name, setName] = useState('');
   const [value, setValue] = React.useState<number | null>(2);
-
+  
   // Define state to hold form input values
   const [formData, setFormData] = useState({
     title: '',
@@ -59,7 +57,9 @@ export const NewReviewForm = (props: any) => {
     movieId: props.message, // Replace with actual movie ID
     userReviewerId: '' // Will be set to the user ID later
   })
-
+  
+  const [name, setName] = useState('');
+  
   // Define the useMutation hooks
   const [createMovieReview, { loading, error, data }] = useMutation(CREATE_MOVIE_REVIEW)
   const [createUser] = useMutation(CREATE_USER)
@@ -70,18 +70,17 @@ export const NewReviewForm = (props: any) => {
       ...formData,
       [e.target.name]: e.target.value
     })
-
   }
 
   // Handle name input changes
-  const handleNameChange = (e: any) => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
   }
 
   // Handle form submission
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // If the e.preventDefault() is uncommented when the button submit is clicked the review stay on the form
-    // e.preventDefault()
+     e.preventDefault()
 
     // Call the createMovieReview mutation with form data
     try {
@@ -90,14 +89,14 @@ export const NewReviewForm = (props: any) => {
         variables: {
           input: {
             user: {
-              name: name,
+              name: name
             }
           }
         }
       })
       
       // Step 2: Obtain the user ID  from result
-      const newUserId = userResult.data.createUser.user.id;
+      const newUserId = userResult?.data.createUser.user.id;
 
       // Step 3: Update formData with the obtained user ID
       setFormData({
@@ -180,7 +179,7 @@ export const NewReviewForm = (props: any) => {
               />
               <br />
               <Button 
-                color='success' 
+                color='success'   
                 variant='contained'
                 type='submit'
               >
