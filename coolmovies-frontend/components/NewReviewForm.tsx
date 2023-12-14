@@ -104,6 +104,7 @@ export const NewReviewForm = (props: any) => {
         userReviewerId: newUserId
       })
 
+      setTimeout(() => {}, 1000)
       // Step 4: Call the createMovieReview mutation with updated form data
       const result = await createMovieReview({
         variables: {
@@ -112,6 +113,12 @@ export const NewReviewForm = (props: any) => {
           },
         },
       });
+
+      if (result.data.createMovieReview.movieReview != 0) {
+        document.location.reload()
+      } else {
+        console.log('try again')
+      }
 
       // Handle the result from the mutation
       console.log('Moview Review added:', result.data.createMovieReview.movieReview)
@@ -125,7 +132,8 @@ export const NewReviewForm = (props: any) => {
   <div>
     <div css={styles.reviewForm}>
         <Typography variant='h4' css={styles.heading}>Write your review:</Typography>
-        {error ? <p>Oh no! {error.message}</p> : null}
+        {/* {error ? <p>Oh no! {error.message}</p> : null} */}
+        {error ? <p>Click on submit button again</p> : null}
         {data && data.createReview ? <p>Saved!</p> : null}
         <br />
           <form onSubmit={handleSubmit}>
@@ -182,6 +190,7 @@ export const NewReviewForm = (props: any) => {
                 color='success'   
                 variant='contained'
                 type='submit'
+                onClick={() => setTimeout(() => {handleSubmit}, 1000)}
               >
                 {loading ? 'Adding Moview Review' : 'Submit'}
                 </Button>
