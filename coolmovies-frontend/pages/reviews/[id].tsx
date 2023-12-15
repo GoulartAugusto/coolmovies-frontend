@@ -8,7 +8,7 @@ import {
   Button
 } from '@mui/material';
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { gql } from '@apollo/client';
 
 import { useRouter } from 'next/router'
@@ -17,6 +17,7 @@ import { useQuery } from "@apollo/client";
 import EditIcon from '../../components/EditIcon'
 
 import { NewReviewForm } from '../../components/NewReviewForm';
+import { EditReviewForm } from '../../components/EditReviewForm';
 
 const GET_MOVIE = gql(`
 query GetMovie($id: ID!) {
@@ -33,6 +34,7 @@ query GetMovie($id: ID!) {
       totalCount
       nodes {
         id
+        nodeId
         title
         rating
         body
@@ -52,6 +54,8 @@ export default function MovieDetail() {
   const router = useRouter();
   const { id } = router.query;
   
+  const [reviewId, setReviewId] = useState('');
+
   // fetch data using apollo client
 const { loading, error, data } = useQuery(GET_MOVIE, {
 variables: { id: id },
@@ -68,6 +72,7 @@ variables: { id: id },
 
   const reviews = movie?.movieReviewsByMovieId.nodes
   {/* add remotePatterns on next.config to render images from url */}
+  
   return (
   <div css={styles.root}>
     <div css={styles.body}>
@@ -89,6 +94,11 @@ variables: { id: id },
                       <br />
                   </div>
             </div>
+            {/*  */}
+            <div>
+              <EditReviewForm />
+            </div>
+            {/*  */}
             <div>
               <div>
                 {
@@ -101,13 +111,19 @@ variables: { id: id },
                         </Typography>
                         <Typography variant='h5'>
                           {comment.title}
-                          <IconButton size="large">
+                          <IconButton 
+                            size="large" 
+                            name='nodeId'
+                            value={comment.nodeId}
+                            onClick={() => {setReviewId(comment.nodeId), console.log(reviewId)}}
+                          >
                             <EditIcon />
-                           </IconButton>
+                          </IconButton>
                         </Typography>
                         <Rating name="read-only" value={comment.rating} readOnly />
                         <br />
                         <Typography variant='body1'>{comment.body}</Typography><br/>
+                        {/* <Typography variant='body1'>{comment.nodeId}</Typography><br/> */}
                       </div>
                     )
                   })
@@ -123,7 +139,6 @@ variables: { id: id },
   
   )
 }
-
 
 const styles = {
   root: css({

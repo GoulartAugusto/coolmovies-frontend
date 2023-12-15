@@ -10,6 +10,7 @@ import type { NextPage } from 'next';
 import { exampleActions, useAppDispatch, useAppSelector } from '../redux';
 import { MovieCard } from '../components/MovieCard';
 
+
 const primary = '#1976d2';
 
 const Home: NextPage = () => {
