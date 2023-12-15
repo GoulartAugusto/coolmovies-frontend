@@ -55,6 +55,28 @@ export default function MovieDetail() {
   const { id } = router.query;
   
   const [reviewId, setReviewId] = useState('');
+  const [reviewData, setReviewData] = useState({
+    nodeId: '',
+    name: '',
+    title: '',
+    rating: 0,
+    body: '',
+    userReviewerId: ''
+  })
+
+  {/*
+        onClick={() => {
+          setReviewData({
+            nodeId: review.nodeId,
+            name: review.userByUserReviewerId.name
+            title: review.title,
+            rating: review.rating,
+            body: review.body
+          }), 
+          console.log(reviewData)
+        }}
+*/}
+
 
   // fetch data using apollo client
 const { loading, error, data } = useQuery(GET_MOVIE, {
@@ -96,34 +118,44 @@ variables: { id: id },
             </div>
             {/*  */}
             <div>
-              <EditReviewForm />
+              <EditReviewForm editReview={reviewData} />
             </div>
             {/*  */}
             <div>
               <div>
                 {
                   !data ? null :
-                  reviews.map((comment: any) => {
+                  reviews.map((review: any) => {
                     return (
-                      <div css={styles.commentCard} key={comment.id}>
+                      <div css={styles.reviewCard} key={review.id}>
                         <Typography variant='body1'>
-                          Review by: {comment?.userByUserReviewerId && comment.userByUserReviewerId.name || 'Anonymous' }
+                          Review by: {review?.userByUserReviewerId && review.userByUserReviewerId.name || 'Anonymous' }
                         </Typography>
                         <Typography variant='h5'>
-                          {comment.title}
+                          {review.title}
                           <IconButton 
                             size="large" 
                             name='nodeId'
-                            value={comment.nodeId}
-                            onClick={() => {setReviewId(comment.nodeId), console.log(reviewId)}}
+                            value={review.nodeId}
+                            onClick={() => {
+                              setReviewData({
+                                nodeId: review.nodeId,
+                                name: review.userByUserReviewerId.name,
+                                title: review.title,
+                                rating: review.rating,
+                                body: review.body,
+                                userReviewerId: review.userByUserReviewerId.id
+                              }), 
+                              console.log(reviewData)
+                            }}
                           >
                             <EditIcon />
                           </IconButton>
                         </Typography>
-                        <Rating name="read-only" value={comment.rating} readOnly />
+                        <Rating name="read-only" value={review.rating} readOnly />
                         <br />
-                        <Typography variant='body1'>{comment.body}</Typography><br/>
-                        {/* <Typography variant='body1'>{comment.nodeId}</Typography><br/> */}
+                        <Typography variant='body1'>{review.body}</Typography><br/>
+                        {/* <Typography variant='body1'>{review.nodeId}</Typography><br/> */}
                       </div>
                     )
                   })
@@ -163,7 +195,7 @@ const styles = {
           gap:"13rem"
         },
   }),
-  commentCard: css({
+  reviewCard: css({
     display: 'grid',
     background: '#F0DC9D',
     border:'1px solid black',

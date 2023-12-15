@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { css } from '@emotion/react';
 import {
@@ -9,46 +9,41 @@ import {
     Rating,
     Button
   } from '@mui/material';
-import { useRouter } from 'next/router';
 
+interface ReviewData {
+  title: string
+  body: string
+  rating: number
+  nodeId: string
+}
 
-import EditIcon from './EditIcon'
+interface EditReviewFormProps {
+  initialData: ReviewData
+}
 
 // Define the GraphQL mutation
-const EDIT_MOVIEW_REVIEW = gql(`
+const EDIT_MOVIE_REVIEW = gql(`
 mutation editMovieReview($input: UpdateMovieReviewInput!) {
     updateMovieReview(input: $input) {
           movieReview {
+              nodeId
               title
               body
               rating
-              nodeId
+              userReviewerId
+              movieByMovieId {
+                title
+              }
+              userByUserReviewerId {
+                id
+                name
+              }
           }
       clientMutationId
     }
   }
 `)
 
-
-const CREATE_MOVIE_REVIEW = gql(`
-mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
-  createMovieReview(input: $input)
-  {
-    movieReview {
-      id
-      title
-      body
-      rating
-      movieByMovieId {
-        title
-      }
-      userByUserReviewerId {
-        name
-      }
-    }
-  }
-}
-`)
 
 {/*
     __ The input that makes this mutation work look like this:
@@ -66,42 +61,115 @@ mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
 
     __ now the work is:
         - fetch the data using the edit icon button based on nodeId parameter
+            - the nodeId is passed by props 
+            - now is needed to fetch the other fields
         - define the states
         - define the useMutation
         - define the handleChange
         - define the handleSubmit
 
 
+        ...
+
+        The mutation work
+        
+        - now the work is:
+            - make the editReviewForm toggle on the review card to make the edit when the client click on it
+
 */}
 
 export const EditReviewForm = (props: any) => {
-    return (
-        <div css={styles.commentCard}>
-          {/* <Typography variant='body1'>
-            Review by: NAME OF REVIEWER
-          </Typography>
-          <Typography variant='h5'>
-            REVIEW TITLE
-            <IconButton size="large">
-              <EditIcon />
-             </IconButton>
-          </Typography>
-          <Rating name="read-only" value={2} readOnly />
-          <br />
-          <Typography variant='body1'>THE TEXT OF THE REVIEW</Typography>
-          <br/> */}
+  //const [editReview, setEditReview] = useState(props.editReview)
+  const editReview = props.editReview
+  const [value, setValue] = React.useState<number | null>(2);
 
-          <form >
+  //const [updateMovieReview, { loading, error, data }] = useMutation(EDIT_MOVIE_REVIEW)
+  
+  console.log('this is the original object', editReview)
+
+  // Define state to hold form input values
+  const [newData, setNewData] = useState<ReviewData>({...editReview})
+
+  // hold the new value for rating input
+
+    console.log('this is the new data object', newData)
+    console.log('this is the new data object', newData)
+
+    // Handle form input changes
+    const handleInputChange = (e: any) => {
+      setNewData({
+        ...newData,
+        [e.target.name]: e.target.value
+      })
+    }
+
+  // Define the state to hold form input values
+  const [formData, setFormData] = useState({
+    title: editReview.title,
+    body: editReview.body,
+    rating: editReview.rating,
+    nodeId: editReview.nodeId
+  })
+
+  // Define the useMutation hook for editing review
+  const [editMovieReview, { loading, error }] = useMutation(EDIT_MOVIE_REVIEW)
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setNewData({
+      ...newData,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // If the e.preventDefault() is uncommented when the button submit is clicked the review stay on the form
+     e.preventDefault()
+
+    // Call the updateMovieReview mutation with form data
+    try {
+      const result = await editMovieReview({
+        variables: {
+          input: {
+            nodeId: editReview.nodeId,
+            movieReviewPatch: {
+              title: newData.title,
+              body: newData.body,
+              rating: newData.rating
+            }
+          },
+        },
+      });
+
+      if (result.data.updateMovieReview.movieReview != 0) {
+        document.location.reload()
+      } else {
+        console.log('try again')
+      }
+
+      // Handle the result from the mutation
+      console.log('Moview Review Edited:', result.data.updateMovieReview.movieReview)
+    } catch (mutationError: any) {
+      console.error('Error editing movie review:', mutationError.message)
+    }
+  }
+
+
+    return (
+        <div css={styles.reviewCard}
+        key={editReview.nodeId}
+        >
+          <form onSubmit={handleSubmit}>
             <FormControl sx={{ width: '93vw' }}>
               <TextField 
+                name='name'
                 fullWidth 
                 id="outlined-basic" 
                 label="Name" 
                 variant="outlined" 
                 color='success' 
-                value='NAME OF THE REVIEWER'
-                name='name'
-              />
+                value={editReview.name}
+                />
               <br />
               <TextField 
                 fullWidth 
@@ -111,18 +179,24 @@ export const EditReviewForm = (props: any) => {
                 variant="outlined" 
                 color='success' 
                 required 
-                value='REVIEW TITLE'
+                value={newData.title}
+                onChange={handleInputChange}
               />
               <br />
               <Typography component="legend">Rate this movie:</Typography>
               <Rating 
                 name='rating'
                 id="simple-controlled" 
-                value={5}
+                value={newData.rating}
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                  handleInputChange({ target: { name: "rating", value: newValue}});
+                }}
               />
               <br/>
               <TextField 
                 name='body'
+                required
                 multiline 
                 fullWidth 
                 id="outlined-multiline-flexible" 
@@ -130,28 +204,23 @@ export const EditReviewForm = (props: any) => {
                 variant="outlined" 
                 color='success' 
                 sx={{ minWidth: '150px' }}
-                value='THE TEXT OF THE REVIEWER'
-                required
+                value={newData.body}
+                onChange={handleInputChange}
               />
               <br />
               <Button 
                 color='success'   
                 variant='contained'
                 type='submit'
+                onClick={() => setTimeout(() => {handleSubmit}, 1000)}
               >
-                EDIT THE REVIEW
-                </Button>
+                {loading ? 'Updating Moview Review ...' : 'EDIT THE REVIEW'}
+              </Button>
             </FormControl>
           </form>
         </div>
       )
 }
-
-
-
-
-
-
 
 const styles = {
     root: css({
@@ -176,7 +245,7 @@ const styles = {
             gap:"13rem"
           },
     }),
-    commentCard: css({
+    reviewCard: css({
       display: 'grid',
       background: '#F0DC9D',
       border:'1px solid black',
