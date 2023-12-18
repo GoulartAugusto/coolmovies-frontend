@@ -29,7 +29,7 @@ const Home: NextPage = () => {
         Good luck! 😄`}
         </Typography> */}
 
-        <div css={styles.mainControls}>
+        {/* <div css={styles.mainControls}>
           <Tooltip
             title={`Side Effect Count from Epic (Gets run on odd values): ${exampleState.sideEffectCount}`}
             arrow
@@ -55,11 +55,12 @@ const Home: NextPage = () => {
           >
             {exampleState.fetchData ? 'Hide some data' : 'Fetch some data'}
           </Button>
-        </div>
+        </div> */}
+        
         <div>
           <MovieCard />
         </div>
-
+{/* 
         <Zoom in={Boolean(exampleState.fetchData)} unmountOnExit mountOnEnter>
           <TextField
             css={styles.dataInput}
@@ -67,7 +68,7 @@ const Home: NextPage = () => {
             label={'Some Data'}
             defaultValue={JSON.stringify(exampleState.fetchData)}
           />
-        </Zoom>
+        </Zoom> */}
       </div>
     </div>
   );

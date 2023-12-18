@@ -5,12 +5,10 @@ import {
 } from '@mui/material';
 
 import { useQuery } from "@apollo/client";
-// import { GET_MOVIE } from '../queries/MoviesQueries'
 
 import Image from 'next/image';
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { gql } from '@apollo/client';
 
 const GET_MOVIES = gql(`

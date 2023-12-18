@@ -9,8 +9,6 @@ import {
   Button
 } from '@mui/material';
 import { useRouter } from 'next/router';
-import { GET_MOVIE } from '../queries/MoviesQueries';
-
 
 // Define the GraphQL mutation
 const CREATE_MOVIE_REVIEW = gql(`

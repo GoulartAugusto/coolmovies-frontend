@@ -45,39 +45,6 @@ mutation editMovieReview($input: UpdateMovieReviewInput!) {
 `)
 
 
-{/*
-    __ The input that makes this mutation work look like this:
-
-    {
-	"input": {
-		"nodeId": "WyJtb3ZpZV9yZXZpZXdzIiwiMGY1ZWRlYmYtNzAwYS00NjQzLWE1ZDktNjkzMWNhZGVhZjI2Il0=",
-		"movieReviewPatch": {
-			"title": "Testing mutation on insomnia",
-			"body": "Testing body of mutation",
-			"rating": 3
-		}
-	}
-}
-
-    __ now the work is:
-        - fetch the data using the edit icon button based on nodeId parameter
-            - the nodeId is passed by props 
-            - now is needed to fetch the other fields
-        - define the states
-        - define the useMutation
-        - define the handleChange
-        - define the handleSubmit
-
-
-        ...
-
-        The mutation work
-        
-        - now the work is:
-            - make the editReviewForm toggle on the review card to make the edit when the client click on it
-
-*/}
-
 export const EditReviewForm = (props: any) => {
   //const [editReview, setEditReview] = useState(props.editReview)
   const editReview = props.editReview
