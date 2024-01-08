@@ -1,9 +1,8 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { css } from '@emotion/react';
 import {
     Typography,
-    IconButton,
     FormControl,
     TextField,
     Rating,
