@@ -109,3 +109,21 @@ const styles = {
 };
 
 export default Home;
+
+// Creating Unit Tests for this project, based on the official next.js website
+
+// https://nextjs.org/docs/app/building-your-application/testing/jest
+
+// This doc's shows how to create unit testing with Jest and React Testing Library
+
+// Firts steps:
+
+// npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom
+
+// Generate a basic Jest configuration file by running the following command:
+
+// npm init jest@latest
+
+// This will automatically create a jest.config.ts|js file
+
+// ... the next step goes on the documentation
