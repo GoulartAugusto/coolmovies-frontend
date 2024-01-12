@@ -1,9 +1,13 @@
 {
   "devDependencies": {
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
     "@graphql-codegen/cli": "^5.0.0",
+    "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@babel/preset-env": "^7.23.8",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.4",
@@ -14,5 +18,8 @@
   },
   "scripts": {
     "test": "jest"
-  }
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
+}
 }

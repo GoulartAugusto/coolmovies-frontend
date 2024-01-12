@@ -10,6 +10,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { css } from '@emotion/react';
 
 import Navbar from '../components/Navbar';
+import Home from 'pages';
 
 export const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -41,7 +42,8 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
         <ApolloProvider client={client}>
           <div css={styles.root}>
             <Navbar />
-            <Component {...pageProps} />
+            <Home/>
+            {/* <Component {...pageProps} /> */}
           </div>
         </ApolloProvider>
       </ReduxProvider>  

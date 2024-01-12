@@ -1,3 +1,4 @@
+import React from 'react';
 import { css } from '@emotion/react';
 import {
   Button,
@@ -131,4 +132,34 @@ export default Home;
 
 // ... the next step goes on the documentation
 
-// 
+// After the configuration of jest.config.ts
+
+// Not do this command, but is good to know
+
+// jest --watch will re-run tests when a file is changed
+
+// Creating the first test:
+
+// The projett is now ready to run tests.
+
+// Create a folder called __tests__
+
+// now create the test as it's described on the next.js website
+
+// name the file __tests__/home.test.jsx
+
+// and optionally, add a snapshot test to keep track of any unexpected changes
+
+// the file name __tests__/snapshot.js
+
+// now run the following command to run tests
+
+// npm run test
+
+// after creating the test based on the next.js website
+
+// I went to this error message.
+
+// could not find react-redux context value; please ensure the component is wrapped in a <Provider>      
+
+// now have to solve it
