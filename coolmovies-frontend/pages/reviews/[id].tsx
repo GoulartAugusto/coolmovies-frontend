@@ -16,8 +16,6 @@ import EditIcon from '../../components/EditIcon'
 import { NewReviewForm } from '../../components/NewReviewForm';
 import { EditReviewForm } from '../../components/EditReviewForm';
 
-import { styled } from '@mui/material/styles';
-
 const GET_MOVIE = gql(`
 query GetMovie($id: ID!) {
   movie(nodeId: $id) {

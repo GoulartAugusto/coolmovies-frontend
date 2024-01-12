@@ -111,8 +111,11 @@ const styles = {
 export default Home;
 
 // Creating Unit Tests for this project, based on the official next.js website
+// And the official apollo graphql website
 
 // https://nextjs.org/docs/app/building-your-application/testing/jest
+
+// https://www.apollographql.com/docs/react/development-testing/testing/
 
 // This doc's shows how to create unit testing with Jest and React Testing Library
 
@@ -127,3 +130,5 @@ export default Home;
 // This will automatically create a jest.config.ts|js file
 
 // ... the next step goes on the documentation
+
+// 
