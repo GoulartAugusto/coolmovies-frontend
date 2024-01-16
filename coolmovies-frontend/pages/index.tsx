@@ -163,3 +163,11 @@ export default Home;
 // could not find react-redux context value; please ensure the component is wrapped in a <Provider>      
 
 // now have to solve it
+
+// added a simple test that check that the navbar component has a link with EcoPortal text
+
+// now has to add a test that check GraphQL query for the homepage
+
+// Seeing how on https://www.apollographql.com/docs/react/development-testing/testing/
+
+// Developing allmovies query tests

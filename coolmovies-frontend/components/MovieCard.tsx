@@ -11,7 +11,7 @@ import React from 'react';
 import Link from 'next/link';
 import { gql } from '@apollo/client';
 
-const GET_MOVIES = gql(`
+export const GET_MOVIES = gql(`
     query getMovies {
         allMovies {
         nodes {
