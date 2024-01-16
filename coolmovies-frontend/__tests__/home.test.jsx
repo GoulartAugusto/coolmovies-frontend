@@ -1,13 +1,13 @@
 import React from 'react'
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import Home from '../pages/index'
+import Navbar from '../components/Navbar'
 
-describe('Home', () => {
-    it('renders a heading title', () => {
-        render(<Home />)
+describe('Navbar', () => {
+    it('renders a Link that redirect to homepage with title: EcoPortal', () => {
+        render(<Navbar />)
 
-        const heading = screen.getByRole('heading', { level: 1 })
+        const heading = screen.getByRole('link', { name: 'EcoPortal' })
 
         expect(heading).toBeInTheDocument()
     })

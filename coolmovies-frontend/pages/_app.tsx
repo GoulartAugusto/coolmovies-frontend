@@ -42,8 +42,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
         <ApolloProvider client={client}>
           <div css={styles.root}>
             <Navbar />
-            <Home/>
-            {/* <Component {...pageProps} /> */}
+            <Component {...pageProps} />
           </div>
         </ApolloProvider>
       </ReduxProvider>  

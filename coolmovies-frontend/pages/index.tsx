@@ -134,7 +134,7 @@ export default Home;
 
 // After the configuration of jest.config.ts
 
-// Not do this command, but is good to know
+// Do not execute this command, but is good to know
 
 // jest --watch will re-run tests when a file is changed
 
