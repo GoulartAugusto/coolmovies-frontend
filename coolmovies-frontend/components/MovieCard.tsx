@@ -52,7 +52,6 @@ export function MovieCard() {
     const { loading, error, data } = useQuery(GET_MOVIES)
     console.log(data)
 
-
     // console.log(data.allMovies.nodes[1].nodeId)
     return (
         <div css={styles.root}>
