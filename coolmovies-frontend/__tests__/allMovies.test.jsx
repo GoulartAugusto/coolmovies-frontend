@@ -22,20 +22,6 @@ const mocks = [
                                 name: "Gareth Edwards",
                                 nodeId: "WyJtb3ZpZV9kaXJlY3RvcnMiLCJjMTAzY2MwOC1lZDM5LTRhM2MtYTFmMy0wZjQzMWMwNzUzOWUiXQ=="
                             },
-                            movieReviewsByMovieId: {
-                                0: {
-                                    body: "Lorem Ipsum Text",
-                                    id: "0ce303a7-8f0c-483f-bd80-deb8730781fc",
-                                    movieId: "70351289-8756-4101-bf9a-37fc8c7a82cd",
-                                    nodeId: "WyJtb3ZpZV9yZXZpZXdzIiwiMGNlMzAzYTctOGYwYy00ODNmLWJkODAtZGViODczMDc4MWZjIl0=",
-                                    rating: 4,
-                                    title: "Test",
-                                    userByUserReviewerId: {
-                                            id: "5f1e6707-7c3a-4acd-b11f-fd96096abd5a",
-                                            name: "Chrono"
-                                        }
-                                }
-                            },
                             nodeId: "WyJtb3ZpZXMiLCI3MDM1MTI4OS04NzU2LTQxMDEtYmY5YS0zN2ZjOGM3YTgyY2QiXQ==", 
                             releaseDate: "2016-12-16",
                             title: "Rogue One: A Star Wars Story"

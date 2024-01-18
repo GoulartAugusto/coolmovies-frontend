@@ -170,4 +170,6 @@ export default Home;
 
 // Seeing how on https://www.apollographql.com/docs/react/development-testing/testing/
 
-// Developing allmovies query tests
+// Developing allmovies query test
+
+// The allMovies test is on development, probably is almost done

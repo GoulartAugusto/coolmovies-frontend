@@ -14,6 +14,30 @@ import { gql } from '@apollo/client';
 export const GET_MOVIES = gql(`
     query getMovies {
         allMovies {
+            nodes {
+                id
+                nodeId
+                title
+                imgUrl
+                releaseDate
+                movieDirectorByMovieDirectorId {
+                name
+                nodeId
+                id
+                age
+                }
+            }
+        }
+    }
+`)
+
+{/*
+
+The old query, with unecessary parameters
+
+export const GET_MOVIES = gql(`
+    query getMovies {
+        allMovies {
         nodes {
             id
             nodeId
@@ -46,6 +70,7 @@ export const GET_MOVIES = gql(`
     }
 `)
 
+*/}
 
 export function MovieCard() {
     // our query's result, data, is typed!
