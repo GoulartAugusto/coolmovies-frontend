@@ -1,6 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import { render, waitFor, screen } from '@testing-library/react'
 import { MockedProvider } from "@apollo/client/testing"
 import { GET_MOVIES, MovieCard } from '../components/MovieCard'
 
@@ -12,7 +12,8 @@ const mocks = [
         result: {
             data: {
                 allMovies: {
-                    nodes: {
+                    nodes: [
+                     {
                         0: {
                             id: "70351289-8756-4101-bf9a-37fc8c7a82cd",
                             imgUrl: "https://upload.wikimedia.org/wikipedia/en/d/d4/Rogue_One%2C_A_Star_Wars_Story_poster.png",
@@ -27,6 +28,7 @@ const mocks = [
                             title: "Rogue One: A Star Wars Story"
                         }
                     }
+                ]
                 }
             }
         }
@@ -39,5 +41,11 @@ it("renders without error", async () => {
             <MovieCard />
         </MockedProvider>
     )
-    expect(await screen.findByText('...Loading')).toBeInTheDocument()
+    // expect(await screen.findByText('...Loading')).toBeInTheDocument()
+
+      // Wait for the data to be loaded
+  await waitFor(() => expect(screen.getByText("Rogue One: A Star Wars Story")).toBeInTheDocument());
+  expect(screen.getByText('Director 1')).toBeInTheDocument();
 })
+
+// Look at Chat gpt
