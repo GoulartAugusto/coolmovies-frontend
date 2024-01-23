@@ -13,8 +13,7 @@ const mocks = [
             data: {
                 allMovies: {
                     nodes: [
-                     {
-                        0: {
+                        {
                             id: "70351289-8756-4101-bf9a-37fc8c7a82cd",
                             imgUrl: "https://upload.wikimedia.org/wikipedia/en/d/d4/Rogue_One%2C_A_Star_Wars_Story_poster.png",
                             movieDirectorByMovieDirectorId: {
@@ -27,7 +26,7 @@ const mocks = [
                             releaseDate: "2016-12-16",
                             title: "Rogue One: A Star Wars Story"
                         }
-                    }
+                     
                 ]
                 }
             }
@@ -35,17 +34,16 @@ const mocks = [
     }
 ]
 
-it("renders without error", async () => {
+it("Render movies correctly", async () => {
     render(
         <MockedProvider mocks={mocks} addTypename={false}>
             <MovieCard />
         </MockedProvider>
     )
-    // expect(await screen.findByText('...Loading')).toBeInTheDocument()
 
-      // Wait for the data to be loaded
+  // Wait for the data to be loaded
   await waitFor(() => expect(screen.getByText("Rogue One: A Star Wars Story")).toBeInTheDocument());
-  expect(screen.getByText('Director 1')).toBeInTheDocument();
+  expect(screen.getByText("Gareth Edwards | 2016")).toBeInTheDocument();
 })
 
-// Look at Chat gpt
+// Test fully working
