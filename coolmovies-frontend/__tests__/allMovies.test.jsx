@@ -22,28 +22,29 @@ const mocks = [
                                 name: "Gareth Edwards",
                                 nodeId: "WyJtb3ZpZV9kaXJlY3RvcnMiLCJjMTAzY2MwOC1lZDM5LTRhM2MtYTFmMy0wZjQzMWMwNzUzOWUiXQ=="
                             },
-                            nodeId: "WyJtb3ZpZXMiLCI3MDM1MTI4OS04NzU2LTQxMDEtYmY5YS0zN2ZjOGM3YTgyY2QiXQ==", 
+                            nodeId: "WyJtb3ZpZXMiLCI3MDM1MTI4OS04NzU2LTQxMDEtYmY5YS0zN2ZjOGM3YTgyY2QiXQ==",
                             releaseDate: "2016-12-16",
                             title: "Rogue One: A Star Wars Story"
                         }
-                     
-                ]
+
+                    ]
                 }
             }
         }
     }
 ]
 
-it("Render movies correctly", async () => {
+it("Render movies from homepage correctly", async () => {
     render(
         <MockedProvider mocks={mocks} addTypename={false}>
             <MovieCard />
         </MockedProvider>
     )
 
-  // Wait for the data to be loaded
-  await waitFor(() => expect(screen.getByText("Rogue One: A Star Wars Story")).toBeInTheDocument());
-  expect(screen.getByText("Gareth Edwards | 2016")).toBeInTheDocument();
+    // Wait for the data to be loaded
+    expect(await screen.findByText("...Loading")).toBeInTheDocument()
+    await waitFor(() => expect(screen.getByText("Rogue One: A Star Wars Story")).toBeInTheDocument());
+    expect(screen.getByText("Gareth Edwards | 2016")).toBeInTheDocument();
 })
 
 // Test fully working
