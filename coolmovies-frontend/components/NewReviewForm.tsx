@@ -8,7 +8,7 @@ import {
   Rating,
   Button
 } from '@mui/material';
-import { useRouter } from 'next/router';
+//import { useRouter } from 'next/router';
 
 // Define the GraphQL mutation
 const CREATE_MOVIE_REVIEW = gql(`
@@ -43,7 +43,7 @@ mutation NewUser($input: CreateUserInput!) {
 `)
 
 export const NewReviewForm = (props: any) => {
-  const router = useRouter();
+  //const router = useRouter();
 
   const [value, setValue] = React.useState<number | null>(2);
   
