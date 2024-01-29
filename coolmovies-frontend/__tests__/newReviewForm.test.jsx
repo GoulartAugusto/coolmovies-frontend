@@ -1,9 +1,9 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { fireEvent } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
-import { render, screen } from '@testing-library/react';
+import { render, waitFor, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MockedProvider } from "@apollo/client/testing";
+import { act } from 'react-dom/test-utils';
 import { CREATE_MOVIE_REVIEW, CREATE_USER, NewReviewForm } from '../components/NewReviewForm'
 
 it("should render without error", () => {
@@ -16,22 +16,46 @@ it("should render without error", () => {
 })
 
 it("should render loading and success states on submit", async () => {
-    const createMovieReview = { movieReview: { title: "Very good", body: "Nice!", rating: 5, movieByMovieId: { title: "Rogue One: A Star Wars Story" }, userByUserReviwerId: { name: "Augusto" } }}
-    const newUser = { createUser: { user: { name: "Augusto"}} }
-
-    const mocks = [
-        {
-            request: {
-                query: CREATE_MOVIE_REVIEW,
-                variables: {
-                    input: {
-                        movieReview: createMovieReview
-                    }
+    const createMovieReviewMock = {
+        request: {
+            query: CREATE_MOVIE_REVIEW,
+            variables: {
+                input: {
+                    movieReview: {
+                        title: "Test Title",
+                        body: "Test Body",
+                        rating: 5,
+                        movieId: "70351289-8756-4101-bf9a-37fc8c7a82cd",
+                        userReviewerId: "5f1e6707-7c3a-4acd-b11f-fd96096abd5a"
+                    },
                 },
-                result: { data }
+            },
+        },
+        result: {
+            data: {
+                createMovieReview: {
+                    movieReview: {
+                        id: "123abc",
+                        title: "Test Title",
+                        body: "Test Body",
+                        rating: 5,
+                        movieByMovieId: {
+                            title: "Rogue One: A Star Wars Story"
+                        },
+                        userByUserReviewerId: {
+                            name: "Chrono"
+                        }
+                    }
+                }
             }
         }
-    ]
+    }
+
+    const createUserMock = {
+        request: {
+            
+        }
+    }
   
     render(
         <MockedProvider mocks={mocks} addTypename={false}>

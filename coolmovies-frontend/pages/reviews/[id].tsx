@@ -135,7 +135,7 @@ variables: { id: id },
 
   const reviews = movie?.movieReviewsByMovieId.nodes
   {/* add remotePatterns on next.config to render images from url */}
-  
+
   return (
   <div css={styles.root}>
     <div css={styles.body}>
