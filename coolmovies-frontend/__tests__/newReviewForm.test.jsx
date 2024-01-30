@@ -15,7 +15,7 @@ it("should render without error", () => {
     )
 })
 
-it("should render loading and success states on submit", async () => {
+
     const createMovieReviewMock = {
         request: {
             query: CREATE_MOVIE_REVIEW,
@@ -43,7 +43,7 @@ it("should render loading and success states on submit", async () => {
                             title: "Rogue One: A Star Wars Story"
                         },
                         userByUserReviewerId: {
-                            name: "Chrono"
+                            name: "Reviewer Name"
                         }
                     }
                 }
@@ -53,93 +53,57 @@ it("should render loading and success states on submit", async () => {
 
     const createUserMock = {
         request: {
-            
+            query: CREATE_USER,
+            variables: {
+                input: {
+                    user: {
+                        name: "Test User"
+                    },
+                },
+            },
+        },
+        result: {
+            data: {
+                createUser: {
+                    id: "2",
+                    name: "Test User"
+                }
+            }
         }
     }
   
-    render(
-        <MockedProvider mocks={mocks} addTypename={false}>
-            <NewReviewForm />
-        </MockedProvider>
-    );
-  
-    // Find the button element
-    
-    const button = await screen.getByText("Submit")
-    fireEvent(button) // Simulate a click and fire the mutation
-    
-    expect(await screen.findByText("Adding Moview Review")).toBeInTheDocument()
-  });
+    test('handles form submission and mutations', async () => {
+        render(
+          <MockedProvider mocks={[createMovieReviewMock, createUserMock]} addTypename={false}>
+            <NewReviewForm message="70351289-8756-4101-bf9a-37fc8c7a82cd" />
+          </MockedProvider>
+        );
+            // Input name
+            userEvent.type(screen.getByLabelText('Name'), 'Test User')
+
+            // Input title
+            userEvent.type(screen.getByLabelText('Title *'), 'Test Title')
+
+            // Input rating
+            userEvent.click(screen.getByPlaceholderText('Rate this movie:').querySelector('input[value="5"]'));
+
+            // Input Body
+            userEvent.type(screen.getByLabelText('Write your review ... *'), 'Test Body')
+
+            // Submit form
+            await act(async () => {
+                userEvent.click(screen.getByText('Submit'))
+                userEvent.click(screen.getByText('Submit'))
+            })
+
+            // Wait for mutation and result
+
+            await waitFor(() => {
+                expect(screen.getByText('Title *')).toBeInTheDocument()
+                expect(screen.getByText('Write your review ... *')).toBeInTheDocument()
+            })
+        })
+
 
 // Developing the test for New Review Mutation
 
-// The test above no execute the mutation, because the mutate function is not called
-
-// the test bellow does execute de mutation
-
-{/*
-
-const CREATE_MOVIE_REVIEW = gql(`
-mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
-  createMovieReview(input: $input)
-  {
-    movieReview {
-      id
-      title
-      body
-      rating
-      movieByMovieId {
-        title
-      }
-      userByUserReviewerId {
-        name
-      }
-    }
-  }
-}
-`)
-
-const CREATE_USER = gql(`
-mutation NewUser($input: CreateUserInput!) {
-  createUser(input: $input) {
-    user {
-      id
-      name
-    }
-  }
-}
-`)
-
-it("should render loading and success states on createMovieReview", () => async {
-    const createMovieReview = { movieReview: { title: "Very good", body: "Nice!", rating: 5, movieByMovieId: { title: "Rogue One: A Star Wars Story" }, userByUserReviwerId: { name: "Augusto" } }}
-    const newUser = { createUser: { user: { name: "Augusto"}} }
-
-    const mocks = [
-        {
-            request: {
-                query: CREATE_MOVIE_REVIEW,
-                variables: {
-                    input: {
-                        movieReview: formData
-                    }
-                },
-                result: { data }
-            }
-        }
-    ]
-
-    render(
-        <MockedProvider mocks={mocks} addTypename={false}>
-            <NewReviewForm />
-        </MockedProvider>
-    )
-    
-    // Find the button element
-    
-    const button = await screen.getByText("Submit")
-    fireEvent(button) // Simulate a click and fire the mutation
-    
-    expect(await screen.findByText("Adding Moview Review")).toBeInTheDocument()
-})
-
-*/}

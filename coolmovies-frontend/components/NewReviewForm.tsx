@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 
 // Define the GraphQL mutation
-const CREATE_MOVIE_REVIEW = gql(`
+export const CREATE_MOVIE_REVIEW = gql(`
 mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
   createMovieReview(input: $input)
   {
@@ -30,7 +30,7 @@ mutation myMutationNewMovieReview($input: CreateMovieReviewInput!) {
 }
 `)
 
-const CREATE_USER = gql(`
+export const CREATE_USER = gql(`
 mutation NewUser($input: CreateUserInput!) {
   createUser(input: $input) {
     user {
@@ -142,13 +142,13 @@ export const NewReviewForm = (props: any) => {
                 variant="outlined" 
                 color='success' 
                 value={name}
-                name='name'
+                name='Name'
                 onChange={handleNameChange}
               />
               <br />
               <TextField 
                 fullWidth 
-                name='title'
+                name='Title'
                 id="outlined-basic" 
                 label="Title" 
                 variant="outlined" 
@@ -160,6 +160,7 @@ export const NewReviewForm = (props: any) => {
               <br />
               <Typography component="legend">Rate this movie:</Typography>
               <Rating 
+                placeholder='Rate this movie:'
                 name='rating'
                 id="simple-controlled" 
                 value={value}
