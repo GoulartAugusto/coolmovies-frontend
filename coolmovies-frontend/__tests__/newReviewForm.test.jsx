@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, waitFor, screen } from '@testing-library/react';
+import { render, waitFor, screen, getByLabelText } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MockedProvider } from "@apollo/client/testing";
 import { act } from 'react-dom/test-utils';
@@ -102,7 +102,7 @@ function hasBodyInputValue(e) {
 
             // Input title
             const titleInput = screen.getByLabelText('Title *')
-            fireEvent.change(titleInput, { target: { name: "Title *", value: "Test Title" } })
+            fireEvent.change(titleInput, { target: { name: "Title", value: "Test Title" } })
             //userEvent.type(screen.getByLabelText('Title *'), 'Test Title')
 
             // Input rating
@@ -110,7 +110,7 @@ function hasBodyInputValue(e) {
 
             // Input Body
             const bodyInput = screen.getByLabelText('Write your review ... *')
-            fireEvent.change(bodyInput, { target: { name: "Write your review ... *", value: "Test Body" } })
+            fireEvent.change(bodyInput, { target: { name: "body", value: "Test Body" } })
             //userEvent.type(screen.getByLabelText('Write your review ... *'), 'Test Body')
 
             // Submit form

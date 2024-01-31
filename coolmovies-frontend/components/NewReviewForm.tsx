@@ -142,7 +142,7 @@ export const NewReviewForm = (props: any) => {
                 variant="outlined" 
                 color='success' 
                 value={name}
-                name='Name'
+                name="Name"
                 onChange={handleNameChange}
               />
               <br />
