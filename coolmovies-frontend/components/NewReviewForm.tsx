@@ -139,18 +139,18 @@ export const NewReviewForm = (props: any) => {
                 fullWidth 
                 id="outlined-basic" 
                 label="Name" 
+                name="Name"
                 variant="outlined" 
                 color='success' 
                 value={name}
-                name="Name"
                 onChange={handleNameChange}
               />
               <br />
               <TextField 
                 fullWidth 
-                name='Title'
-                id="outlined-basic" 
                 label="Title" 
+                name="Title"
+                id="outlined-basic" 
                 variant="outlined" 
                 color='success' 
                 required 
@@ -171,11 +171,11 @@ export const NewReviewForm = (props: any) => {
               />
               <br/>
               <TextField 
-                name='body'
+                name="body"
+                label="Write your review ..." 
                 multiline 
                 fullWidth 
                 id="outlined-multiline-flexible" 
-                label="Write your review ..." 
                 variant="outlined" 
                 color='success' 
                 sx={{ minWidth: '150px' }}
