@@ -21,7 +21,7 @@ interface EditReviewFormProps {
 }
 
 // Define the GraphQL mutation
-const EDIT_MOVIE_REVIEW = gql(`
+export const EDIT_MOVIE_REVIEW = gql(`
 mutation editMovieReview($input: UpdateMovieReviewInput!) {
     updateMovieReview(input: $input) {
           movieReview {
