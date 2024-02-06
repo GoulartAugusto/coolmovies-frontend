@@ -36,12 +36,12 @@ const editMovieReviewMock = {
 }
 
 
-test('handles form that edit a review submission and mutations', async () => {
+test('handles the title field of the form that edit a review submission and mutations', async () => {
     const editReview = {
         nodeId: "WyJtb3ZpZV9yZXZpZXdzIiwiMTFiZWY2YjItNmUzZS00MDAwLWExZWQtYWQxN2RiYjg5OWVkIl0=",
-            title: "Good",                                                                                                                                                                                                                             
-            body: "nice",
-            rating: 5,
+        title: "Good",                                                                                                                                                                                                                             
+        body: "nice",
+        rating: 5,
     }
     render(
         <MockedProvider mocks={[editMovieReviewMock]} addTypename={false}>
@@ -51,8 +51,8 @@ test('handles form that edit a review submission and mutations', async () => {
 
     const titleInput = screen.getByLabelText("Edit the title *");
 
-      // Input new title
-  userEvent.type(screen.getByLabelText('Edit the title *'), 'New Title');
+    // Input new title
+    // userEvent.type(screen.getByLabelText('Edit the title *'), 'New Title');
 
     // Input title
     fireEvent.change(titleInput, { target: { value: 'New Title' } });
@@ -64,7 +64,39 @@ test('handles form that edit a review submission and mutations', async () => {
 
     // Wait for mutation and result
     await waitFor(() => {
-        expect(titleInput.value).toBe('Test Title')
+        expect(titleInput.value).toBe('New Title')
+    })
+})
+
+test('handles the body field of the form that edit a review submission and mutations', async () => {
+    const editReview = {
+        nodeId: "WyJtb3ZpZV9yZXZpZXdzIiwiMTFiZWY2YjItNmUzZS00MDAwLWExZWQtYWQxN2RiYjg5OWVkIl0=",
+        title: "Good",                                                                                                                                                                                                                             
+        body: "nice",
+        rating: 5,
+    }
+    render(
+        <MockedProvider mocks={[editMovieReviewMock]} addTypename={false}>
+            <EditReviewForm editReview={editReview} />
+        </MockedProvider>
+    );
+
+    const bodyInput = screen.getByLabelText("Edit your review ... *");
+
+    // Input new title
+    // userEvent.type(screen.getByLabelText('Edit your review ... *'), 'New Body');
+
+    // Input title
+    fireEvent.change(bodyInput, { target: { value: 'New Body' } });
+
+    // Submit form
+    await act(async () => {
+        userEvent.click(screen.getByText('EDIT THE REVIEW'))
+    })
+
+    // Wait for mutation and result
+    await waitFor(() => {
+        expect(bodyInput.value).toBe('New Body')
     })
 })
 
