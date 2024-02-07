@@ -23,53 +23,9 @@ const Home: NextPage = () => {
         <Typography variant={'h1'} css={styles.heading}>
           {'EcoPortal Coolmovies'}
         </Typography>
-        {/* <Typography variant={'subtitle1'} css={styles.subtitle}>
-          {`Thank you for taking the time to take our test. We really appreciate it. 
-        All the information on what is required can be found in the README at the root of this repo. 
-        Please don't spend ages on this and just get through as much of it as you can. 
-        Good luck! 😄`}
-        </Typography> */}
-
-        {/* <div css={styles.mainControls}>
-          <Tooltip
-            title={`Side Effect Count from Epic (Gets run on odd values): ${exampleState.sideEffectCount}`}
-            arrow
-          >
-            <Button
-              variant={'contained'}
-              onClick={() => dispatch(exampleActions.increment())}
-              color='secondary'
-            >
-              {`Redux Increment: ${exampleState.value}`}
-            </Button>
-          </Tooltip>
-          <Button
-            color='secondary'
-            variant={'outlined'}
-            onClick={() =>
-              dispatch(
-                exampleState.fetchData
-                  ? exampleActions.clearData()
-                  : exampleActions.fetch()
-              )
-            }
-          >
-            {exampleState.fetchData ? 'Hide some data' : 'Fetch some data'}
-          </Button>
-        </div> */}
-        
         <div>
           <MovieCard />
         </div>
-{/* 
-        <Zoom in={Boolean(exampleState.fetchData)} unmountOnExit mountOnEnter>
-          <TextField
-            css={styles.dataInput}
-            multiline
-            label={'Some Data'}
-            defaultValue={JSON.stringify(exampleState.fetchData)}
-          />
-        </Zoom> */}
       </div>
     </div>
   );
@@ -173,3 +129,49 @@ export default Home;
 // Developing allmovies query test
 
 // The allMovies test is on development, probably is almost done
+
+
+{/* 
+        <Zoom in={Boolean(exampleState.fetchData)} unmountOnExit mountOnEnter>
+          <TextField
+            css={styles.dataInput}
+            multiline
+            label={'Some Data'}
+            defaultValue={JSON.stringify(exampleState.fetchData)}
+          />
+        </Zoom> */}
+
+        {/* <Typography variant={'subtitle1'} css={styles.subtitle}>
+          {`Thank you for taking the time to take our test. We really appreciate it. 
+        All the information on what is required can be found in the README at the root of this repo. 
+        Please don't spend ages on this and just get through as much of it as you can. 
+        Good luck! 😄`}
+        </Typography> */}
+
+        {/* <div css={styles.mainControls}>
+          <Tooltip
+            title={`Side Effect Count from Epic (Gets run on odd values): ${exampleState.sideEffectCount}`}
+            arrow
+          >
+            <Button
+              variant={'contained'}
+              onClick={() => dispatch(exampleActions.increment())}
+              color='secondary'
+            >
+              {`Redux Increment: ${exampleState.value}`}
+            </Button>
+          </Tooltip>
+          <Button
+            color='secondary'
+            variant={'outlined'}
+            onClick={() =>
+              dispatch(
+                exampleState.fetchData
+                  ? exampleActions.clearData()
+                  : exampleActions.fetch()
+              )
+            }
+          >
+            {exampleState.fetchData ? 'Hide some data' : 'Fetch some data'}
+          </Button>
+        </div> */}
